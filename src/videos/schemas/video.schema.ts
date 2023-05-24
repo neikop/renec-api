@@ -1,7 +1,13 @@
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export const VideoSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  breed: String,
-});
+@Schema()
+export class Video extends Document {
+  @Prop()
+  name: string;
+
+  @Prop({ required: true })
+  url: string;
+}
+
+export const VideoSchema = SchemaFactory.createForClass(Video);

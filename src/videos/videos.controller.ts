@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'auth/auth.guard';
 import { CreateVideoDto } from './dto/create-video.dto';
-import { Video } from './entities/video.entity';
+import { Video } from './schemas/video.schema';
 import { VideosService } from './videos.service';
 
 @ApiBearerAuth()
@@ -11,14 +11,14 @@ import { VideosService } from './videos.service';
 export class VideosController {
   constructor(private videosService: VideosService) {}
 
-  @UseGuards(AuthGuard)
   @Post()
+  @UseGuards(AuthGuard)
   async create(@Body() createVideoDto: CreateVideoDto) {
     return this.videosService.create(createVideoDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get()
+  @UseGuards(AuthGuard)
   async findAll(): Promise<Video[]> {
     return this.videosService.findAll();
   }

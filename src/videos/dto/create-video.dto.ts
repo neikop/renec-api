@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsUrl } from 'class-validator';
 
 export class CreateVideoDto {
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsString()
   name: string;
 
   @ApiProperty()
-  age: number;
-
-  @ApiProperty()
-  breed: string;
+  @IsUrl()
+  url: string;
 }
