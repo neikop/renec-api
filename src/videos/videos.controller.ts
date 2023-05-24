@@ -9,7 +9,7 @@ import { VideosService } from './videos.service';
 @ApiTags('Video')
 @Controller('videos')
 export class VideosController {
-  constructor(private readonly videosService: VideosService) {}
+  constructor(private videosService: VideosService) {}
 
   @UseGuards(AuthGuard)
   @Post()
