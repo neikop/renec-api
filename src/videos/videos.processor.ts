@@ -1,17 +1,17 @@
 import { Process, Processor } from '@nestjs/bull';
-import { Logger } from '@nestjs/common';
+import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Job } from 'bull';
+import { Server } from 'socket.io';
 import { Video } from './schemas/video.schema';
 
+@WebSocketGateway({ cors: { origin: '*' } })
 @Processor('video')
 export class VideosProcessor {
-  private readonly logger = new Logger(VideosProcessor.name);
+  @WebSocketServer()
+  server: Server;
 
   @Process('create')
-  handleTranscode(job: Job<Video>) {
-    this.logger.debug('Start transcoding...');
-    const { data: video } = job;
-    this.logger.debug(video);
-    this.logger.debug('Transcoding completed');
+  handleEmitCreate(job: Job<Video>) {
+    this.server.emit('video-create', { video: job.data });
   }
 }
