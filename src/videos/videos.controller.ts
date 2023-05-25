@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'auth/auth.guard';
 import { CreateVideoDto } from './dto/create-video.dto';
-import { Video } from './schemas/video.schema';
+import { FetchVideoDto } from './dto/fetch-video.dto';
 import { VideosService } from './videos.service';
 
 @ApiBearerAuth()
@@ -19,7 +19,7 @@ export class VideosController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async findAll(): Promise<Video[]> {
-    return this.videosService.findAll();
+  async fetch(@Query() query: FetchVideoDto) {
+    return this.videosService.fetchByPagination(query);
   }
 }
