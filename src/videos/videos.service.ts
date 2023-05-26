@@ -21,13 +21,21 @@ export class VideosService {
   }
 
   async fetchByPagination(query: FetchVideoDto) {
-    const limit = Number(query.size ?? 20);
-    const skip = (Number(query.page ?? 1) - 1) * limit;
-    const result = this.videoModel.find().skip(skip).limit(limit).exec();
+    const page = Number(query.page) || 1;
+    const limit = Number(query.size) || 10;
+    const skip = (page - 1) * limit;
+    const result = this.videoModel
+      .find()
+      .sort({ createdAt: 'desc' })
+      .skip(skip)
+      .limit(limit)
+      .exec();
     const counter = this.videoModel.countDocuments().exec();
     return Promise.all([result, counter]).then(([items, total]) => ({
       items: items.map((item) => item.toJSON()),
       total,
+      page,
+      size: limit,
     }));
   }
 }
