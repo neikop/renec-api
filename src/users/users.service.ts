@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { SignUpDto } from 'auth/dto/sign-up.dto';
+import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 
@@ -18,7 +19,12 @@ export class UsersService {
     if (existed) {
       throw new BadRequestException('Username has been taken');
     }
-    const createdVideo = new this.userModel(createUserDto);
+
+    const salt = await bcrypt.genSalt();
+    const createdVideo = new this.userModel({
+      ...createUserDto,
+      password: await bcrypt.hash(createUserDto.password, salt),
+    });
     return createdVideo.save();
   }
 
