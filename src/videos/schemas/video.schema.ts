@@ -20,6 +20,9 @@ export class Video extends Document {
 
   @Prop({ default: Date.now() })
   createdAt: Date;
+
+  @Prop()
+  createdBy: string;
 }
 
 export const VideoSchema = SchemaFactory.createForClass(Video);

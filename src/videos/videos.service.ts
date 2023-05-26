@@ -1,6 +1,7 @@
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { JwtPayload } from 'auth/dto/jwt-payload.dto';
 import { Queue } from 'bull';
 import { Model } from 'mongoose';
 import { CreateVideoDto } from './dto/create-video.dto';
@@ -14,8 +15,12 @@ export class VideosService {
     @InjectModel(Video.name) private videoModel: Model<Video>,
   ) {}
 
-  async create(createVideoDto: CreateVideoDto) {
-    const createdVideo = await new this.videoModel(createVideoDto).save();
+  async create(createVideoDto: CreateVideoDto, user: JwtPayload) {
+    const createdVideo = await new this.videoModel({
+      ...createVideoDto,
+      createdAt: Date.now(),
+      createdBy: user.sub,
+    }).save();
     this.videoQueue.add('create', { ...createdVideo.toJSON() });
     return createdVideo;
   }
