@@ -25,14 +25,8 @@ describe('VideosService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         VideosService,
-        {
-          provide: getModelToken(Video.name),
-          useValue: videoModel,
-        },
-        {
-          provide: getQueueToken(Video.name),
-          useValue: videoQueue,
-        },
+        { provide: getModelToken(Video.name), useValue: videoModel },
+        { provide: getQueueToken(Video.name), useValue: videoQueue },
       ],
     }).compile();
 
@@ -47,24 +41,36 @@ describe('VideosService', () => {
     expect(queue).toBeDefined();
   });
 
-  describe('VideoModel', () => {
-    it('should create new one', async () => {
-      const video: CreateVideoDto = {
-        url: 'https://youtube.com/watch?v=abc',
-        title: 'video',
-        authorName: 'author',
-        authorUrl: 'https://youtube.com/@channel',
-        thumbnailUrl: 'https://example.com/abc.png',
-      };
-      const user: JwtPayload = {
-        sub: '0x123',
-        username: 'john',
-      };
-      model.create.mockResolvedValueOnce({ toJSON: jest.fn() });
+  it('should create new one', async () => {
+    const video: CreateVideoDto = {
+      url: 'https://youtube.com/watch?v=abc',
+      title: 'video',
+      authorName: 'author',
+      authorUrl: 'https://youtube.com/@channel',
+      thumbnailUrl: 'https://example.com/abc.png',
+    };
+    const user: JwtPayload = {
+      sub: '0x123',
+      username: 'john',
+    };
+    model.create.mockResolvedValueOnce({ toJSON: jest.fn() });
 
-      await service.create(video, user);
-      expect(model.create).toHaveBeenCalledTimes(1);
-      expect(queue.add).toHaveBeenCalledTimes(1);
-    });
+    await service.create(video, user);
+    expect(model.create).toHaveBeenCalledTimes(1);
+    expect(queue.add).toHaveBeenCalledTimes(1);
+  });
+
+  it('should throw not found', async () => {
+    model.find.mockResolvedValueOnce({});
+    try {
+      const query = {
+        page: 1,
+        size: 10,
+      };
+      await service.fetchByPagination(query);
+    } catch (e) {
+      expect(model.find).toBeCalledTimes(1);
+      expect(model.find).toHaveBeenLastCalledWith();
+    }
   });
 });

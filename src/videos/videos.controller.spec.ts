@@ -17,13 +17,9 @@ describe('VideosController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [],
       controllers: [VideosController],
       providers: [
-        {
-          provide: VideosService,
-          useValue: videoService,
-        },
+        { provide: VideosService, useValue: videoService },
         AuthGuard,
         JwtService,
       ],
@@ -35,6 +31,7 @@ describe('VideosController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+    expect(service).toBeDefined();
   });
 
   describe('VideoService', () => {

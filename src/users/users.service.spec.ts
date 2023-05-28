@@ -18,10 +18,7 @@ describe('UsersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
-        {
-          provide: getModelToken(User.name),
-          useValue: mappingModel,
-        },
+        { provide: getModelToken(User.name), useValue: mappingModel },
       ],
     }).compile();
 
@@ -51,7 +48,7 @@ describe('UsersService', () => {
   });
 
   it('should throw not found', async () => {
-    model.find.mockRejectedValue({ message: 'not found :)' });
+    model.find.mockRejectedValueOnce({ message: 'not found :)' });
     try {
       await service.findOne('john');
     } catch (e) {
