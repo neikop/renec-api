@@ -7,10 +7,7 @@ import { User } from './schemas/user.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User.name)
-    private userModel: Model<User>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async create(createUserDto: SignUpDto): Promise<User> {
     const existed = await this.userModel.exists({
@@ -21,11 +18,10 @@ export class UsersService {
     }
 
     const salt = await bcrypt.genSalt();
-    const createdVideo = new this.userModel({
+    return this.userModel.create({
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, salt),
     });
-    return createdVideo.save();
   }
 
   async findOne(username: string): Promise<User | undefined> {

@@ -13,5 +13,5 @@ export class SignUpDto {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsEmail()
-  email: string;
+  email?: string;
 }
