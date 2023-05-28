@@ -1,9 +1,9 @@
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { JwtPayload } from 'auth/dto/jwt-payload.dto';
 import { Queue } from 'bull';
 import { Model } from 'mongoose';
+import { JwtPayload } from '../auth/dto/jwt-payload.dto';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { FetchVideoDto } from './dto/fetch-video.dto';
 import { Video } from './schemas/video.schema';

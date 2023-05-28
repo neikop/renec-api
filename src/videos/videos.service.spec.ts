@@ -1,7 +1,7 @@
 import { getQueueToken } from '@nestjs/bull';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { JwtPayload } from 'auth/dto/jwt-payload.dto';
+import { JwtPayload } from '../auth/dto/jwt-payload.dto';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { Video } from './schemas/video.schema';
 import { VideosService } from './videos.service';

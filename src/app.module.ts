@@ -1,9 +1,9 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from 'auth/auth.module';
-import { env } from 'env';
-import { VideosModule } from 'videos/videos.module';
+import { AuthModule } from './auth/auth.module';
+import { env } from './env';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
