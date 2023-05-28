@@ -18,10 +18,11 @@ export class UsersService {
     }
 
     const salt = await bcrypt.genSalt();
-    return this.userModel.create({
+    const createdUser = await this.userModel.create({
       ...createUserDto,
       password: await bcrypt.hash(createUserDto.password, salt),
     });
+    return createdUser;
   }
 
   async findOne(username: string): Promise<User | undefined> {

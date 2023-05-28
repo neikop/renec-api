@@ -11,16 +11,16 @@ import { Video } from './schemas/video.schema';
 @Injectable()
 export class VideosService {
   constructor(
-    @InjectQueue('video') private videoQueue: Queue,
     @InjectModel(Video.name) private videoModel: Model<Video>,
+    @InjectQueue(Video.name) private videoQueue: Queue,
   ) {}
 
   async create(createVideoDto: CreateVideoDto, user: JwtPayload) {
-    const createdVideo = await new this.videoModel({
+    const createdVideo = await this.videoModel.create({
       ...createVideoDto,
       createdAt: Date.now(),
       createdBy: user.sub,
-    }).save();
+    });
     this.videoQueue.add('create', { ...createdVideo.toJSON() });
     return createdVideo;
   }

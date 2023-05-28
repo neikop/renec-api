@@ -9,7 +9,7 @@ import { VideosService } from './videos.service';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Video.name, schema: VideoSchema }]),
-    BullModule.registerQueue({ name: 'video' }),
+    BullModule.registerQueue({ name: Video.name }),
   ],
   controllers: [VideosController],
   providers: [VideosService, VideosProcessor],

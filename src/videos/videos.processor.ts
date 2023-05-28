@@ -5,7 +5,7 @@ import { Server } from 'socket.io';
 import { Video } from './schemas/video.schema';
 
 @WebSocketGateway({ cors: { origin: '*' } })
-@Processor('video')
+@Processor(Video.name)
 export class VideosProcessor {
   @WebSocketServer()
   server: Server;

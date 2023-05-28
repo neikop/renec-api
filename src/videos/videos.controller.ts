@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { FetchVideoDto } from './dto/fetch-video.dto';
 import { VideosService } from './videos.service';
