@@ -5,15 +5,15 @@ services:
     image: mongo:latest
     environment:
       - MONGODB_DATABASE="renec"
-    ports:
-      - 27017:27017
+    expose:
+      - 27017
     volumes:
       - 'mongodb_data:/data'
 
   redis:
     image: redis:alpine
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
     volumes:
       - 'redis_data:/data'
 
@@ -22,8 +22,8 @@ services:
     depends_on:
       - mongodb
       - redis
-    ports:
-      - 8080:8080
+    expose:
+      - 8080
 
 volumes:
   mongodb_data:
