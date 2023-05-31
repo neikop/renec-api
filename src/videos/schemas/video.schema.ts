@@ -18,6 +18,9 @@ export class Video extends Document {
   @Prop()
   thumbnailUrl: string;
 
+  @Prop()
+  html: string;
+
   @Prop({ default: Date.now() })
   createdAt: Date;
 

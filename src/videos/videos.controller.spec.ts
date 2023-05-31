@@ -42,6 +42,7 @@ describe('VideosController', () => {
         authorName: 'author',
         authorUrl: 'https://youtube.com/@channel',
         thumbnailUrl: 'https://example.com/abc.png',
+        html: '',
       };
       const req = {
         user: {},

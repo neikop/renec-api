@@ -25,4 +25,9 @@ export class CreateVideoDto {
   @IsOptional()
   @IsString()
   thumbnailUrl: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  html: string;
 }

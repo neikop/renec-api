@@ -48,6 +48,7 @@ describe('VideosService', () => {
       authorName: 'author',
       authorUrl: 'https://youtube.com/@channel',
       thumbnailUrl: 'https://example.com/abc.png',
+      html: '',
     };
     const user: JwtPayload = {
       sub: '0x123',
