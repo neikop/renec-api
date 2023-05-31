@@ -26,7 +26,6 @@ export class VideosController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
   async fetch(@Query() query: FetchVideoDto) {
     return this.videosService.fetchByPagination(query);
   }

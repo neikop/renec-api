@@ -7,6 +7,8 @@ services:
       - MONGODB_DATABASE="renec"
     expose:
       - 27017
+    ports:
+      - 27017:27017
     volumes:
       - 'mongodb_data:/data'
 
@@ -14,6 +16,8 @@ services:
     image: redis:alpine
     expose:
       - 6379
+    ports:
+      - 6379:6379
     volumes:
       - 'redis_data:/data'
 

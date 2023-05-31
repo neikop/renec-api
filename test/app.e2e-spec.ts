@@ -27,10 +27,6 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer()).get('/auth/profile').expect(401);
   });
 
-  it('/videos (GET)', () => {
-    return request(app.getHttpServer()).get('/videos').expect(401);
-  });
-
   describe('Check Authentication', () => {
     let jwtToken: string;
 
